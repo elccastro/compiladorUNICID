@@ -1,0 +1,24 @@
+%%
+
+%standalone
+%class testando
+
+desconsiderar = [\t|\n|\s]+
+letras = [a-zA-Z]+
+reservadas = ("SELECT"|"select"|"DISTINCT"|"distinct"|"FROM"|"from"|"COUNT"|"count"|"SUM"|"sum"|"MAX"|"max"|"MIN"|"min"|"SUM"|"sum"|"WHERE"|"where"|"OR"|"or"|"AND"|"and"|"LIKE"|"like"|"BETWEEN"|"between")
+operadores = ("+"|"-"|"="|"<"|">"|"!=")
+inteiros = ([0-9]+)
+simbolos = ([^a-z A-Z])
+variaveis = ([a-zA-Z0-9]+)
+textos = (\"{letras}\")
+
+%%
+
+{desconsiderar} {/* DESCONSIDERANDO */}
+{reservadas} {System.out.print("<RES>");}
+{operadores} {System.out.print("<OPE>");}
+{inteiros} {System.out.print("<INT>");}
+{textos} {System.out.print("<TEXT>");}
+{simbolos} {System.out.print("<SIM>");}
+{variaveis} {System.out.print("<VAR>");}
+.         {System.out.printf("<Erro> na linha %d, coluna %d, Message => %s", yyline++, yycolumn++, yytext());}
